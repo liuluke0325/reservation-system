@@ -2,12 +2,15 @@ import { FormControl, FormLabel, Input, FormErrorMessage, Button, Box, Step, Ste
 import { Formik, Form, Field } from "formik"
 
 const steps = [
-    { title: 'First', description: 'Wallet' },
-    { title: 'Second', description: 'Email' },
-    { title: 'Third', description: 'Submitted' },
+    { title: 'First', description: 'Check Wallet' },
+    { title: 'Second', description: 'Link Email' },
+    { title: 'Third', description: 'Complete!' },
 ]
 
-const ReserveForm = () => {
+type ReserveFormProps = {
+    onClickDone?: () => void
+}
+const ReserveForm = ({ onClickDone }: ReserveFormProps) => {
 
     const { activeStep, setActiveStep } = useSteps({
         index: 1,
@@ -18,6 +21,8 @@ const ReserveForm = () => {
         let error
         if (!value) {
             error = 'Email is required'
+        } else if (!value.match(`^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)) {
+            error = "Invalid Email"
         }
         return error
     }
@@ -72,6 +77,7 @@ const ReserveForm = () => {
                                         )}
                                     </Field>
                                     <Button
+                                        width="full"
                                         mt={4}
                                         isLoading={props.isSubmitting}
                                         type='submit'
@@ -82,7 +88,7 @@ const ReserveForm = () => {
                             )}
                         </Formik></>
                     case 3:
-                        return <Box >Done!</Box>
+                        return <Button type="button" onClick={onClickDone}>Done!</Button>
                 }
             })()
             }</Box>
