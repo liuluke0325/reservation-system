@@ -1,5 +1,7 @@
-import { FormControl, FormLabel, Input, FormErrorMessage, Button, Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Center } from "@chakra-ui/react"
+import { Text, FormControl, FormLabel, Input, FormErrorMessage, Button, Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Center } from "@chakra-ui/react"
+import { useSDK } from "@metamask/sdk-react"
 import { Formik, Form, Field } from "formik"
+import { useState } from "react"
 
 const steps = [
     { title: 'First', description: 'Check Wallet' },
@@ -27,6 +29,23 @@ const ReserveForm = ({ onClickDone }: ReserveFormProps) => {
         return error
     }
 
+
+    const [account, setAccount] = useState<string>();
+    const { sdk, connected, chainId } = useSDK();
+
+    const connect = async () => {
+
+        try {
+            console.log('before')
+            const accounts = await sdk?.connect();
+            console.log("🚀 ~ file: ReserveForm.tsx:41 ~ connect ~ accounts:", accounts)
+            console.log('wtf')
+            setAccount(accounts?.[0]);
+        } catch (err) {
+            console.warn(`failed to connect..`, err);
+        }
+    };
+
     return <>
         <Stepper index={activeStep}>
             {steps.map((step, index) => (
@@ -52,7 +71,16 @@ const ReserveForm = ({ onClickDone }: ReserveFormProps) => {
             <Box mt="10"> {(() => {
                 switch (activeStep) {
                     case 1:
-                        return <Button onClick={() => { setActiveStep(prev => prev + 1) }}>Next</Button>
+                        return <>
+                            {(connected && account) ? <div>
+
+                                <Text>{account && `Connected account: ${account}`}</Text>
+                                <Button onClick={() => { setActiveStep(prev => prev + 1) }}>Next</Button>
+
+                            </div>
+                                : <Button onClick={connect} type="button">
+                                    Connect to MetaMask
+                                </Button >}</>
                     case 2:
                         return <><Formik
                             initialValues={{ email: "" }}
@@ -82,7 +110,7 @@ const ReserveForm = ({ onClickDone }: ReserveFormProps) => {
                                         isLoading={props.isSubmitting}
                                         type='submit'
                                     >
-                                        Submit
+                                        Next
                                     </Button>
                                 </Form>
                             )}
