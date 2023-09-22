@@ -104,7 +104,7 @@ const ReserveForm = () => {
 
         const from = provider?.selectedAddress;
 
-        console.debug(`sign from: ${from}`);
+       
         try {
             if (!from || from === null) {
                 alert(`Invalid account -- please connect using eth_requestAccounts first`);
@@ -272,7 +272,6 @@ const ReserveForm = () => {
                                                         return;
                                                     }
                                                     setIsLoading(false);
-                                                    console.log(values.signature, 'values.signature')
                                                     !errors.signature && setActiveStep(prev => prev + 1)
                                                 }}
 
