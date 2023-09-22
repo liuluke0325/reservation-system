@@ -1,27 +1,60 @@
-# React + TypeScript + Vite
+# reservation-system
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A project demo using react + typescript + Chakra UI + MetaMask SDK to create a simple reservation system.
 
-Currently, two official plugins are available:
+## Design Choices
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* React: Fast development using a component-based approach.
+* TypeScript: Prevent type-related errors for better code quality.
+* React Vite: Quick development and compile times.
+* Chakra UI: Quick UI development with customizable components.
+* MetaMask/sdk-react: Official MetaMask integration for React.
+* can-fixture: Mocking responses for efficient testing.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To start the development server, run:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+To build the project, run:
+
+```bash
+npm run build
+```
+
+### Folder Structure
+
+```bash
+src/
+  apis/ // API related
+  components/  // all the components
+  fixture/ // to mock API response
+  utils/ // utils functions
+```
+
+### How to test it
+
+To ensure the functionality of this project, follow these steps:  
+
+1. Browser Compatibility: Test the project in both Google Chrome and Mozilla Firefox to ensure cross-browser compatibility.  
+
+2. Customize API Response: You can customize the API responses for testing purposes. Follow these steps to adjust the predefined API responses:  
+   * Navigate to the src/fixture/ directory.
+   * Locate the fixture.js file and open it for editing.  
+
+3. Modify API Responses: In fixture.js, you can modify the predefined API responses to simulate different scenarios and error handling.
+
+   ```ts
+   // comment out or change the response status code
+   // response(429); 
+   response(200); 
+   ```
+
+4. View Error Handling: After customizing the API response in fixture.js, the user interface (UI) should display the corresponding error handling based on the modified API responses.
+
+### Author
+
+This project was created by Luke Liu.
