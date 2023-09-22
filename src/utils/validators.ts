@@ -3,7 +3,7 @@ export const emailValidator = (value: string) => {
 
     if (!value) {
         error = "Required"
-    } else if (!value.match(`/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;`)) {
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
         error = "Invalid Email";
     }
 
@@ -14,9 +14,16 @@ export const inviteCodeValidator = (value: string) => {
     let error;
     if (!value) {
         error = "Required"
-    } else if (!value.match(`/^[A-Z0-9]{10}$/`)) {
+    } else if (!/^[A-Z0-9]{10}$/.test(value)) {
         error = "Invalid Invite Code";
     }
+    return error;
+}
 
+export const requiredValidator = (value: string) => {
+    let error;
+    if (!value) {
+        error = "Required"
+    }
     return error;
 }
