@@ -1,5 +1,6 @@
 import { FormControl, FormLabel, Input, FormErrorMessage, Button } from "@chakra-ui/react"
 import { Formik, Form, Field } from "formik"
+import { api } from "../apis/api"
 
 type ReserveCodeFormProps = {
     afterCodeValidate: () => void
@@ -16,13 +17,17 @@ const ReserveCodeForm = ({ afterCodeValidate }: ReserveCodeFormProps) => {
         return error
     }
     return <Formik
-        initialValues={{ name: 'Sasuke' }}
-        onSubmit={(values, actions) => {
-            setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
-                actions.setSubmitting(false)
-                afterCodeValidate()
-            }, 1000)
+        initialValues={{ code: '' }}
+        onSubmit={async (values, actions) => {
+
+            try {
+                await api.verifyCode(values.code);
+                afterCodeValidate();
+            } catch (err) {
+                actions.setFieldError("code", (err as Error).message);
+            }
+            actions.setSubmitting(false);
+
         }}
     >
         {(props) => (

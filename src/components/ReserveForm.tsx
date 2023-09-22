@@ -1,4 +1,4 @@
-import { Text, FormControl, FormLabel, Input, FormErrorMessage, Button, Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Center } from "@chakra-ui/react"
+import { Text, FormControl, FormLabel, Input, FormErrorMessage, Button, Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Center, Stack } from "@chakra-ui/react"
 import { useSDK } from "@metamask/sdk-react"
 import { Formik, Form, Field } from "formik"
 import { useState } from "react"
@@ -31,15 +31,12 @@ const ReserveForm = ({ onClickDone }: ReserveFormProps) => {
 
 
     const [account, setAccount] = useState<string>();
-    const { sdk, connected, chainId } = useSDK();
+    const { sdk, connected, connecting } = useSDK();
 
     const connect = async () => {
 
         try {
-            console.log('before')
-            const accounts = await sdk?.connect();
-            console.log("🚀 ~ file: ReserveForm.tsx:41 ~ connect ~ accounts:", accounts)
-            console.log('wtf')
+            const accounts = await sdk?.connect() as string[]
             setAccount(accounts?.[0]);
         } catch (err) {
             console.warn(`failed to connect..`, err);
@@ -72,13 +69,11 @@ const ReserveForm = ({ onClickDone }: ReserveFormProps) => {
                 switch (activeStep) {
                     case 1:
                         return <>
-                            {(connected && account) ? <div>
-
+                            {(connected && account) ? <Stack>
                                 <Text>{account && `Connected account: ${account}`}</Text>
                                 <Button onClick={() => { setActiveStep(prev => prev + 1) }}>Next</Button>
-
-                            </div>
-                                : <Button onClick={connect} type="button">
+                            </Stack>
+                                : <Button onClick={connect} type="button" isLoading={connecting}>
                                     Connect to MetaMask
                                 </Button >}</>
                     case 2:

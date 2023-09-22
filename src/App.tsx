@@ -20,7 +20,7 @@ const App = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Reserve Progress</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <ReserveForm onClickDone={onClose} />
