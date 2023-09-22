@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { Box, Button, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from '@chakra-ui/react'
+import { Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from '@chakra-ui/react'
 import ReserveForm from './components/ReserveForm';
 import ReserveCodeForm from './components/ReserveCodeForm';
 
@@ -8,29 +8,17 @@ import ReserveCodeForm from './components/ReserveCodeForm';
 
 
 const App = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  // const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Stack>
         <Heading>Reservation System</Heading>
-        <ReserveCodeForm afterCodeValidate={onOpen} />
+        {/* <ReserveCodeForm afterCodeValidate={onOpen} /> */}
+        <ReserveForm></ReserveForm>
       </Stack>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Reserve Progress</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <ReserveForm onClickDone={onClose} />
-          </ModalBody>
 
-          <ModalFooter>
-
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </>
   )
 }
